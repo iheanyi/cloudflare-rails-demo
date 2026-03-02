@@ -3,25 +3,39 @@ import { Container, getContainer } from "@cloudflare/containers";
 interface Env {
   RAILS_APP: DurableObjectNamespace<RailsApp>;
   RAILS_MASTER_KEY: string;
-  SOLID_QUEUE_IN_PUMA: string;
 }
 
-export class RailsApp extends Container {
-  defaultPort = 80;
+export class RailsApp extends Container<Env> {
+  defaultPort = 8080;
+  sleepAfter = "5m";
+
+  enableInternet = true;
+
+  constructor(ctx: DurableObject["ctx"], env: Env) {
+    super(ctx, env);
+    this.envVars = {
+      RAILS_MASTER_KEY: env.RAILS_MASTER_KEY,
+      SOLID_QUEUE_IN_PUMA: "true",
+      RAILS_ENV: "production",
+      RAILS_SERVE_STATIC_FILES: "true",
+      RAILS_LOG_TO_STDOUT: "true",
+      HTTP_PORT: "8080",
+      PORT: "3000",
+    };
+  }
 
   override onStart(): void {
-    // Container sleeps after idle and re-seeds SQLite on wake
+    console.log("Rails container started");
+  }
+
+  override onError(error: unknown): void {
+    console.error("Rails container error:", error);
   }
 }
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const container = getContainer(env.RAILS_APP);
-
-    return container.fetch(request, {
-      headers: {
-        "X-Forwarded-Proto": "https",
-      },
-    });
+    return container.fetch(request);
   },
 };
