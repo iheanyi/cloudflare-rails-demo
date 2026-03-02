@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
   before_action :set_board
-  before_action :set_card, only: [:edit, :update, :destroy, :move]
+  before_action :set_card, only: [ :edit, :update, :destroy, :move ]
 
   def create
     @column = @board.board_columns.find(params[:card][:board_column_id])

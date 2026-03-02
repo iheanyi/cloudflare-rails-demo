@@ -25,7 +25,7 @@ class PresenceChannel < ApplicationCable::Channel
 
   def decrement_viewers
     count = Rails.cache.read(cache_key).to_i
-    Rails.cache.write(cache_key, [count - 1, 0].max, expires_in: 1.hour)
+    Rails.cache.write(cache_key, [ count - 1, 0 ].max, expires_in: 1.hour)
   end
 
   def broadcast_count

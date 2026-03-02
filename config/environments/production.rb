@@ -88,7 +88,7 @@ Rails.application.configure do
   config.hosts = nil
 
   # Allow Action Cable connections from any origin.
-  config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
+  config.action_cable.allowed_request_origins = [ /https?:\/\/.*/ ]
 
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
