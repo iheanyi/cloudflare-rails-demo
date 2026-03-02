@@ -1,0 +1,40 @@
+<%= turbo_frame_tag dom_id(@card), data: { card_id: @card.id } do %>
+  <div class="group bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-150 card-handle cursor-grab active:cursor-grabbing">
+    <div class="p-3">
+      <% if @card.label.present? %>
+        <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium text-white mb-2"
+              style="background-color: <%= label_color %>">
+          <%= @card.label %>
+        </span>
+      <% end %>
+
+      <div class="flex items-start justify-between gap-2">
+        <%= link_to @card.title,
+              edit_board_card_path(@board, @card),
+              class: "text-sm font-medium text-gray-800 hover:text-blue-600 transition-colors leading-snug",
+              data: { turbo_frame: dom_id(@card) } %>
+
+        <%= button_to board_card_path(@board, @card),
+              method: :delete,
+              class: "opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 flex-shrink-0",
+              data: { turbo_frame: dom_id(@card) },
+              form: { class: "inline" } do %>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        <% end %>
+      </div>
+
+      <% if @card.description.present? %>
+        <p class="text-xs text-gray-500 mt-1.5 line-clamp-2 leading-relaxed"><%= truncate(@card.description, length: 120) %></p>
+      <% end %>
+
+      <div class="flex items-center gap-1.5 mt-2 text-gray-400">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span class="text-xs"><%= time_ago %></span>
+      </div>
+    </div>
+  </div>
+<% end %>
