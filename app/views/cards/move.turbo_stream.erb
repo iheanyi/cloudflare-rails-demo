@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "board_#{@board.id}_columns" do %>
+  <%= render partial: "boards/columns_container", locals: { board: @board.reload } %>
+<% end %>
+
+<%= turbo_stream.append "global_notifications" do %>
+  <%= render Shared::NotificationComponent.new(message: "Card moved") %>
+<% end %>

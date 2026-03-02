@@ -1,0 +1,13 @@
+<%= turbo_stream_from @board %>
+
+<div class="flex flex-col h-screen">
+  <%= render Board::HeaderComponent.new(board: @board) %>
+
+  <main class="flex-1 overflow-hidden">
+    <div id="board_<%= @board.id %>_columns" class="flex gap-6 p-6 overflow-x-auto h-[calc(100vh-4rem)]">
+      <% @board_columns.each do |col| %>
+        <%= render Board::ColumnComponent.new(board_column: col, board: @board) %>
+      <% end %>
+    </div>
+  </main>
+</div>

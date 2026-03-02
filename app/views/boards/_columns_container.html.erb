@@ -1,0 +1,5 @@
+<div id="board_<%= board.id %>_columns" class="flex gap-6 p-6 overflow-x-auto h-[calc(100vh-4rem)]">
+  <% board.board_columns.includes(:cards).each do |col| %>
+    <%= render Board::ColumnComponent.new(board_column: col, board: board) %>
+  <% end %>
+</div>
