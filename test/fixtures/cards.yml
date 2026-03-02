@@ -1,0 +1,23 @@
+first_card:
+  board_column: backlog
+  title: "First task"
+  description: "Description for first task"
+  label: "feature"
+  label_color: "#3B82F6"
+  position: 1
+
+second_card:
+  board_column: backlog
+  title: "Second task"
+  description: "A bug to fix"
+  label: "bug"
+  label_color: "#EF4444"
+  position: 2
+
+in_progress_card:
+  board_column: in_progress
+  title: "Working on it"
+  description: "Currently in progress"
+  label: "devops"
+  label_color: "#F59E0B"
+  position: 1

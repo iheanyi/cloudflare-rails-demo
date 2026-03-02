@@ -1,0 +1,11 @@
+backlog:
+  board: demo
+  name: "Backlog"
+  position: 1
+  color: "#6B7280"
+
+in_progress:
+  board: demo
+  name: "In Progress"
+  position: 2
+  color: "#3B82F6"
