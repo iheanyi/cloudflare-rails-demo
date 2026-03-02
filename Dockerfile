@@ -80,6 +80,6 @@ COPY --chown=rails:rails --from=build /rails /rails
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Start server directly — Cloudflare handles SSL/HTTP2, no need for Thruster
-EXPOSE 3000
-CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+# Start server via Thruster
+EXPOSE 8080
+CMD ["./bin/thrust", "./bin/rails", "server"]

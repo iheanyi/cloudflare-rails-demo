@@ -1,9 +1,12 @@
 #!/bin/bash -e
 
 # If running the rails server then create or migrate existing database
-if echo "$@" | grep -q "./bin/rails server"; then
-  ./bin/rails db:prepare
-  ./bin/rails db:seed
+if echo "$@" | grep -q "rails server"; then
+  echo "=== Running db:prepare ==="
+  ./bin/rails db:prepare 2>&1 || echo "db:prepare failed but continuing"
+  echo "=== Running db:seed ==="
+  ./bin/rails db:seed 2>&1 || echo "db:seed failed but continuing"
+  echo "=== Starting server ==="
 fi
 
 exec "${@}"
