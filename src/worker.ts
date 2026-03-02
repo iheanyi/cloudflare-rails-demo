@@ -1,12 +1,18 @@
 import { Container, getContainer } from "@cloudflare/containers";
 
 interface Env {
-  RAILS_APP: DurableObjectNamespace<Container>;
+  RAILS_APP: DurableObjectNamespace<RailsApp>;
   RAILS_MASTER_KEY: string;
   SOLID_QUEUE_IN_PUMA: string;
 }
 
-export { Container as RailsApp };
+export class RailsApp extends Container {
+  defaultPort = 80;
+
+  override onStart(): void {
+    // Container sleeps after idle and re-seeds SQLite on wake
+  }
+}
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
