@@ -20,18 +20,8 @@ export class RailsApp extends Container<Env> {
       RAILS_SERVE_STATIC_FILES: "true",
       RAILS_LOG_TO_STDOUT: "true",
       HTTP_PORT: "8080",
+      FORWARD_HEADERS: "true",
     };
-  }
-
-  override async fetch(request: Request): Promise<Response> {
-    // Wait up to 60s for Rails to boot (db:prepare + db:seed + Puma startup)
-    await this.startAndWaitForPorts({
-      ports: [8080],
-      cancellationOptions: {
-        portReadyTimeoutMS: 60_000,
-      },
-    });
-    return this.containerFetch(request, 8080);
   }
 
   override onStart(): void {
@@ -45,7 +35,17 @@ export class RailsApp extends Container<Env> {
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const container = getContainer(env.RAILS_APP);
-    return container.fetch(request);
+    try {
+      const container = getContainer(env.RAILS_APP);
+      const response = await container.fetch(request);
+      console.log(`Container response: ${response.status} ${response.statusText}, content-length: ${response.headers.get("content-length")}`);
+      return response;
+    } catch (error) {
+      console.error("Worker fetch error:", error);
+      return new Response(
+        `Worker error: ${error instanceof Error ? error.message : String(error)}`,
+        { status: 500 }
+      );
+    }
   },
 };
