@@ -6,7 +6,7 @@ interface Env {
 }
 
 export class RailsApp extends Container<Env> {
-  defaultPort = 8080;
+  defaultPort = 3000;
   sleepAfter = "5m";
 
   enableInternet = true;
@@ -19,8 +19,6 @@ export class RailsApp extends Container<Env> {
       RAILS_ENV: "production",
       RAILS_SERVE_STATIC_FILES: "true",
       RAILS_LOG_TO_STDOUT: "true",
-      HTTP_PORT: "8080",
-      PORT: "3000",
     };
   }
 
