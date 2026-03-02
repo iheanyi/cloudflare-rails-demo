@@ -23,6 +23,17 @@ export class RailsApp extends Container<Env> {
     };
   }
 
+  override async fetch(request: Request): Promise<Response> {
+    // Wait up to 60s for Rails to boot (db:prepare + db:seed + Puma startup)
+    await this.startAndWaitForPorts({
+      ports: [8080],
+      cancellationOptions: {
+        portReadyTimeoutMS: 60_000,
+      },
+    });
+    return this.containerFetch(request, 8080);
+  }
+
   override onStart(): void {
     console.log("Rails container started");
   }
