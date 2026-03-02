@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
+    "paths": {
+      "controllers/*": ["./app/javascript/controllers/*"]
+    }
+  },
+  "include": ["app/javascript/**/*.ts"],
+  "exclude": ["node_modules", "src"]
+}
