@@ -4,31 +4,37 @@
        data-action="keydown->card-editor#cancel">
     <%= form_with model: @card, url: board_card_path(@board, @card), class: "space-y-3" do |f| %>
       <div>
+        <label for="card_title" class="sr-only">Title</label>
         <%= f.text_field :title,
+              id: "card_title",
               class: "w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-              placeholder: "Card title" %>
+              placeholder: "Card title\u2026",
+              autofocus: true %>
       </div>
 
       <div>
+        <label for="card_description" class="sr-only">Description</label>
         <%= f.text_area :description,
+              id: "card_description",
               rows: 3,
               class: "w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
-              placeholder: "Add a description..." %>
+              placeholder: "Add a description\u2026" %>
       </div>
 
       <div>
+        <label for="card_label" class="sr-only">Label</label>
         <%= f.select :label,
               options_for_select(Card::LABELS.keys.map { |l| [l.capitalize, l] }, @card.label),
               { include_blank: "No label" },
-              class: "w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white" %>
+              { id: "card_label", class: "w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white" } %>
       </div>
 
       <div class="flex items-center gap-2">
         <%= f.submit "Save",
-              class: "px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors cursor-pointer" %>
+              class: "px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-colors cursor-pointer" %>
         <%= link_to "Cancel",
               board_path(@board),
-              class: "px-3 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors",
+              class: "px-3 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-md transition-colors",
               data: { turbo_frame: dom_id(@card), card_editor_target: "cancelLink" } %>
       </div>
     <% end %>

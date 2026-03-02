@@ -2,10 +2,10 @@
   <div class="px-4 py-3 border-b border-gray-100">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full" style="background-color: <%= @board_column.color %>"></span>
+        <span class="w-3 h-3 rounded-full" style="background-color: <%= @board_column.color %>" aria-hidden="true"></span>
         <h2 class="font-semibold text-gray-800 text-sm"><%= @board_column.name %></h2>
       </div>
-      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-xs font-medium text-gray-600">
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-xs font-medium text-gray-600" style="font-variant-numeric: tabular-nums;" aria-label="<%= @board_column.cards.size %> cards">
         <%= @board_column.cards.size %>
       </span>
     </div>
@@ -13,6 +13,8 @@
 
   <div class="flex-1 overflow-y-auto p-3 space-y-3"
        id="column_<%= @board_column.id %>_cards"
+       role="list"
+       aria-label="<%= @board_column.name %> cards"
        data-controller="sortable"
        data-sortable-board-id-value="<%= @board.id %>"
        data-column-id="<%= @board_column.id %>">

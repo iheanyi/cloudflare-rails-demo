@@ -9,14 +9,92 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
-.sortable-ghost {
-  opacity: 0.4;
-  background: #c8ebfb;
-  border-radius: 0.5rem;
+/* Screen-reader only utility (used by labels) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
+/* Turbo frame display */
+turbo-frame {
+  display: block;
+}
+
+/* SortableJS: ghost placeholder left behind */
+.sortable-ghost {
+  opacity: 0.25;
+  background: #dbeafe;
+  border-radius: 0.5rem;
+  border: 2px dashed #93c5fd;
+}
+
+.sortable-ghost > * {
+  opacity: 0;
+}
+
+/* SortableJS: the card being dragged (fallback mode) */
+.sortable-fallback {
+  opacity: 1 !important;
+  transform: rotate(2deg) scale(1.04);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18), 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  z-index: 9999;
+  cursor: grabbing !important;
+}
+
+/* SortableJS: chosen state before drag starts */
+.sortable-chosen {
+  cursor: grabbing !important;
+}
+
+/* SortableJS: native drag class (unused with forceFallback but kept for safety) */
 .sortable-drag {
   opacity: 0.9;
   transform: rotate(2deg);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Column drop zone highlight during drag */
+.sortable-drop-zone {
+  background-color: rgba(59, 130, 246, 0.04);
+  transition: background-color 0.2s ease;
+  border-radius: 0.5rem;
+}
+
+/* Disable text selection during drag */
+body.is-dragging {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Smooth card list transitions */
+[data-controller="sortable"] > turbo-frame {
+  transition: transform 0.15s ease;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .sortable-fallback {
+    transform: none;
+  }
+
+  .sortable-ghost {
+    opacity: 0.5;
+    border: 2px solid #93c5fd;
+  }
+
+  [data-controller="sortable"] > turbo-frame {
+    transition: none;
+  }
+
+  .animate-pulse {
+    animation: none;
+  }
 }

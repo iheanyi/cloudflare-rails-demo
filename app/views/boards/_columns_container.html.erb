@@ -1,4 +1,4 @@
-<div id="board_<%= board.id %>_columns" class="flex gap-6 p-6 overflow-x-auto h-[calc(100vh-4rem)]">
+<div id="board_<%= board.id %>_columns" class="flex gap-6 p-6 overflow-x-auto h-[calc(100vh-4rem)]" role="region" aria-label="Board columns" tabindex="0">
   <% board.board_columns.includes(:cards).each do |col| %>
     <%= render Board::ColumnComponent.new(board_column: col, board: board) %>
   <% end %>

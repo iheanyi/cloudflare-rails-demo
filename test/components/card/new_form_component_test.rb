@@ -6,7 +6,7 @@ class Card::NewFormComponentTest < ViewComponent::TestCase
     column = board_columns(:backlog)
     render_inline(Card::NewFormComponent.new(column: column, board: board))
 
-    assert_selector "button", text: "Add card"
+    assert_selector "button", text: "Add Card"
   end
 
   test "has new-card controller data attribute" do
